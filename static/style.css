@@ -18,6 +18,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 /* Formula Font (Primary Choice - Download from pangrampangram.com for free trial) */
+/* Commented out because font files are not included in deployment */
+/*
 @font-face {
   font-family: 'Formula';
   src: url('fonts/Formula-Light.woff2') format('woff2');
@@ -65,6 +67,7 @@
   font-style: normal;
   font-display: swap;
 }
+*/
 
 html {
   scroll-behavior: smooth;
@@ -73,7 +76,7 @@ html {
 body {
   background-color: var(--dark-bg);
   color: var(--text-primary);
-  font-family: 'Formula', 'Inter', 'Poppins', 'Montserrat', 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: 'Inter', 'Poppins', 'Montserrat', 'Segoe UI', Roboto, Arial, sans-serif;
   line-height: 1.6;
   margin: 0;
   position: relative;
@@ -825,8 +828,6 @@ body::before {
   margin: 0 auto;
   text-align: center;
 }
-
-
 
 footer {
   padding: 2rem 0;

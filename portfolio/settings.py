@@ -125,7 +125,8 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Whitenoise configuration for static files
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Using basic storage to avoid issues with missing font files
+STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 
 # Media files (uploads)
 MEDIA_URL = '/media/'
