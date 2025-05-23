@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site_settings.site_title|default:"Marcelo Salinas - Portfolio" }}</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="container">
+            <div class="nav-brand">
+                MAR<span class="brand-initial">CELO</span> SALINAS
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#models">3D Models</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#resume">Resume</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    {% if hero_section %}
+                        <p class="hero-greeting">{{ hero_section.greeting }}</p>
+                        <h1 class="hero-name">{{ hero_section.name }}</h1>
+                        <p class="hero-title">{{ hero_section.title }}</p>
+                        <div class="hero-divider"></div>
+                        <p class="hero-description">
+                            {{ hero_section.description }}
+                        </p>
+                        <div class="hero-buttons">
+                            <a href="#projects" class="btn btn-primary">{{ hero_section.primary_button_text }}</a>
+                            <a href="#contact" class="btn btn-outline">{{ hero_section.secondary_button_text }}</a>
+                        </div>
+                    {% else %}
+                        <p class="hero-greeting">HELLO, I'M</p>
+                        <h1 class="hero-name">MARCELO SALINAS</h1>
+                        <p class="hero-title">Mechanical Engineering Student & Designer</p>
+                        <div class="hero-divider"></div>
+                        <p class="hero-description">
+                            Specializing in innovative mechanical solutions and 3D modeling for complex engineering challenges. I transform concepts into functional products with precision and creativity.
+                        </p>
+                        <div class="hero-buttons">
+                            <a href="#projects" class="btn btn-primary">VIEW MY WORK</a>
+                            <a href="#contact" class="btn btn-outline">GET IN TOUCH</a>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="hero-visual">
+                    <div class="model-3d-container">
+                        <canvas id="hero-3d-canvas"></canvas>
+                        <div class="model-drop-zone" id="model-drop-zone">
+                            <div class="drop-content">
+                                <i class="fas fa-cubes"></i>
+                                <h3>Upload Your LEGO Model</h3>
+                                <p>Bring your digital LEGO creations to life</p>
+                                <p class="sub-text">Supports .glb and .gltf file formats</p>
+                                <button class="upload-btn" id="upload-btn">
+                                    <i class="fas fa-cloud-upload-alt"></i> Choose File
+                                </button>
+                                <input type="file" id="file-input" accept=".glb,.gltf" style="display: none;">
+                                <div style="margin-top: 1.5rem; font-size: 0.85rem; color: rgba(176, 176, 176, 0.6);">
+                                    Or drag and drop your file here
+                                </div>
+                            </div>
+                        </div>
+                        <div class="model-loading" id="model-loading" style="display: none;">
+                            <div class="spinner"></div>
+                            <p>Loading 3D Model...</p>
+                        </div>
+                        <div class="model-controls-overlay" id="model-controls-overlay" style="display: none;">
+                            <button class="control-overlay-btn" id="upload-new-btn" title="Upload New Model">
+                                <i class="fas fa-upload"></i>
+                            </button>
+                            <button class="control-overlay-btn" id="reset-model-btn" title="Reset to Default">
+                                <i class="fas fa-undo"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Projects Section -->
+    <section id="projects" class="projects-section">
+        <div class="container">
+            <div class="projects-header">
+                <p class="section-label">MY PORTFOLIO</p>
+                <h2 class="projects-title">{{ site_settings.projects_section_title|default:"FEATURED PROJECTS" }}</h2>
+                <div class="projects-divider"></div>
+                <p class="projects-description">
+                    {{ site_settings.projects_section_description|default:"Explore my latest mechanical engineering projects including 3D models, prototypes, and functional designs." }}
+                </p>
+            </div>
+            
+            <div class="project-filters">
+                <button class="filter-btn active" data-filter="all">ALL</button>
+                <button class="filter-btn" data-filter="cad">CAD DESIGN</button>
+                <button class="filter-btn" data-filter="prototypes">PROTOTYPES</button>
+                <button class="filter-btn" data-filter="simulations">SIMULATIONS</button>
+                <button class="filter-btn" data-filter="consulting">CONSULTING</button>
+            </div>
+            
+            <div class="blog-grid">
+                <!-- Lego Collection Project -->
+                <article class="blog-post" data-category="cad">
+                    <div class="post-image">
+                        <img src="https://via.placeholder.com/400x250/e20000/ffffff?text=LEGO+Collection" alt="Lego Collection" loading="lazy">
+                        <div class="post-category">CAD DESIGN</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">December 2024</span>
+                            <span class="post-duration">6 months</span>
+                        </div>
+                        <h3 class="post-title">Lego Collection</h3>
+                        <p class="post-excerpt">A comprehensive collection of detailed LEGO models designed with precision engineering. Features custom builds, modifications, and innovative building techniques showcasing mechanical engineering principles.</p>
+                        <div class="post-tags">
+                            <span class="tag">LEGO</span>
+                            <span class="tag">3D MODELING</span>
+                            <span class="tag">DESIGN</span>
+                            <span class="tag">ENGINEERING</span>
+                        </div>
+                        <a href="#" class="read-more">View Project <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- Project Gata -->
+                <article class="blog-post" data-category="prototypes">
+                    <div class="post-image">
+                        <img src="https://via.placeholder.com/400x250/333333/e20000?text=Project+GATA" alt="Project Gata" loading="lazy">
+                        <div class="post-category">PROTOTYPES</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">November 2024</span>
+                            <span class="post-duration">4 months</span>
+                        </div>
+                        <h3 class="post-title">Project Gata</h3>
+                        <p class="post-excerpt">An innovative mechanical engineering project focused on advanced prototype development and testing. Combines theoretical engineering concepts with practical application and real-world problem solving.</p>
+                        <div class="post-tags">
+                            <span class="tag">PROTOTYPING</span>
+                            <span class="tag">MECHANICAL</span>
+                            <span class="tag">TESTING</span>
+                            <span class="tag">INNOVATION</span>
+                        </div>
+                        <a href="#" class="read-more">View Project <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3D Model Explorer Section -->
+    <section id="models" class="model-explorer-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-label">INTERACTIVE EXPERIENCE</p>
+                <h2 class="section-title">{{ site_settings.models_section_title|default:"3D MODEL EXPLORER" }}</h2>
+                <div class="section-divider"></div>
+                <p class="section-description">
+                    {{ site_settings.models_section_description|default:"Interact with some of my detailed 3D models. Rotate, zoom, and explore the engineering details." }}
+                </p>
+            </div>
+
+            <div class="model-viewer-container">
+                <div class="model-viewport">
+                    <div id="three-canvas-container">
+                        <canvas id="model-canvas"></canvas>
+                        <div class="loading-spinner">
+                            <div class="spinner"></div>
+                            <p>Loading 3D Model...</p>
+                        </div>
+                        <div class="interaction-hint">
+                            <div class="hint-content">
+                                <i class="fas fa-hand-pointer"></i>
+                                <p>Click and drag to rotate • Scroll to zoom • Right-click to pan</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="model-controls">
+                    <div class="control-section">
+                        <h3>MODEL CONTROLS</h3>
+                        
+                        <div class="model-selector">
+                            <label class="control-label">SELECT MODEL</label>
+                            <select id="model-select" class="model-dropdown">
+                                <option value="turbine">Turbine Engine</option>
+                                <option value="drone">Inspection Drone</option>
+                                <option value="robotic-arm">Robotic Arm</option>
+                                <option value="suspension">Suspension Component</option>
+                            </select>
+                        </div>
+
+                        <div class="view-options">
+                            <label class="control-label">VIEW OPTIONS</label>
+                            <div class="view-buttons">
+                                <button class="view-btn active" data-view="solid">
+                                    <i class="fas fa-cube"></i> Solid
+                                </button>
+                                <button class="view-btn" data-view="wireframe">
+                                    <i class="fas fa-border-style"></i> Wireframe
+                                </button>
+                                <button class="view-btn" data-view="exploded">
+                                    <i class="fas fa-expand-arrows-alt"></i> Exploded
+                                </button>
+                                <button class="view-btn" data-view="textured">
+                                    <i class="fas fa-palette"></i> Textured
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="model-info">
+                            <label class="control-label">MODEL INFORMATION</label>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">PARTS:</span>
+                                    <span class="info-value" id="parts-count">142 components</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">CREATED:</span>
+                                    <span class="info-value" id="created-date">June 12, 2023</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">SOFTWARE:</span>
+                                    <span class="info-value" id="software-used">SolidWorks 2023</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">DIMENSIONS:</span>
+                                    <span class="info-value" id="dimensions">450mm × 320mm × 280mm</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="model-actions">
+                            <button class="action-btn primary">
+                                <i class="fas fa-download"></i> Download Model
+                            </button>
+                            <button class="action-btn secondary">
+                                <i class="fas fa-share"></i> Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2>ABOUT ME</h2>
+            {% if about_section %}
+            <p>{{ about_section.content }}</p>
+            {% else %}
+            <p>I am a dedicated Mechanical Engineering student at Texas State University with a passion for design, innovation, and problem-solving. With hands-on experience in CAD software, 3D printing technologies, and automotive maintenance, I am constantly seeking opportunities to apply engineering principles to real-world challenges.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="section">
+        <div class="container">
+            <h2>EDUCATION</h2>
+            {% for edu in education %}
+            <div class="card">
+                <h3>{{ edu.institution|upper }}</h3>
+                <p class="subtitle">{{ edu.degree }}</p>
+                <p>{{ edu.graduation_date }}</p>
+                <ul>
+                    {% if edu.gpa %}<li>GPA: {{ edu.gpa }}</li>{% endif %}
+                    {% if edu.honors %}<li>{{ edu.honors }}</li>{% endif %}
+                    {% if edu.coursework %}<li>{{ edu.coursework }}</li>{% endif %}
+                </ul>
+            </div>
+            {% empty %}
+            <div class="card">
+                <h3>TEXAS STATE UNIVERSITY, SAN MARCOS, TX</h3>
+                <p class="subtitle">Bachelor of Science in Mechanical Engineering</p>
+                <p>Expected Graduation: June 2027</p>
+                <ul>
+                    <li>GPA: 3.5/4.0</li>
+                    <li>Dean's List: Fall 2023, Fall 2024</li>
+                    <li>Relevant Coursework: Integral Calculus with Multivariables, Statics, Physics, Chemistry, Engineering Graphics</li>
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+        <div class="container">
+            <h2>TECHNICAL SKILLS</h2>
+            <div class="skills-grid">
+                {% for category in skill_categories %}
+                <div class="skill-category">
+                    <h3>{{ category.name }}</h3>
+                    <ul>
+                        {% for skill in category.skills.all %}
+                        <li>{{ skill.name }}{% if skill.proficiency %} ({{ skill.proficiency }}){% endif %}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% empty %}
+                <div class="skill-category">
+                    <h3>DESIGN</h3>
+                    <ul>
+                        <li>SolidWorks (Expert)</li>
+                        <li>Computer-Aided Design (CAD)</li>
+                        <li>3D Printing Technologies</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>TECHNICAL</h3>
+                    <ul>
+                        <li>Python Programming</li>
+                        <li>Physics & Chemistry Lab Equipment</li>
+                        <li>Automotive Maintenance</li>
+                    </ul>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section">
+        <div class="container">
+            <h2>HANDS-ON EXPERIENCE</h2>
+            {% for experience in experiences %}
+            <div class="card">
+                <h3>{{ experience.title }}</h3>
+                <ul>
+                    {% for achievement in experience.get_achievements_list %}
+                    <li>{{ achievement }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% empty %}
+            <div class="card">
+                <h3>ADVANCED CAD AND ADDITIVE MANUFACTURING PROJECTS</h3>
+                <ul>
+                    <li>Developed intricate mechanical components using SolidWorks, emphasizing precision and adherence to complex specifications.</li>
+                    <li>Leveraged CAD software for detailed simulations and modifications, enhancing project outcomes.</li>
+                    <li>Utilized additive manufacturing techniques to prototype designs, refining processes and outcomes through iterative testing.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>AUTOMOTIVE MAINTENANCE PROJECTS</h3>
+                <ul>
+                    <li>Performed comprehensive maintenance on Mazda Miata including differential and transmission fluid changes.</li>
+                    <li>Diagnosed and executed brake system repairs including pad replacement.</li>
+                    <li>Conducted regular preventative maintenance and oil changes.</li>
+                    <li>Developed systematic approach to vehicle diagnostics and repair, integrating CAD tools for custom solutions.</li>
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Work Section -->
+    <section id="work" class="section">
+        <div class="container">
+            <h2>WORK EXPERIENCE</h2>
+            {% for work in work_experiences %}
+            <div class="card">
+                <h3>{{ work.job_title|upper }}</h3>
+                <p class="subtitle">{{ work.company }}, {{ work.location }} | {{ work.get_date_range }}</p>
+                <ul>
+                    {% for responsibility in work.get_responsibilities_list %}
+                    <li>{{ responsibility }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% empty %}
+            <div class="card">
+                <h3>GYMNASTICS COACH</h3>
+                <p class="subtitle">Olympia Hills, Buda, TX | August 2024 - Present</p>
+                <ul>
+                    <li>Instruct students in proper technique and safety protocols.</li>
+                    <li>Develop and implement progressive training programs.</li>
+                    <li>Foster an environment promoting teamwork and skill development.</li>
+                    <li>Communicate effectively with parents regarding student progress.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>SALES ASSOCIATE</h3>
+                <p class="subtitle">Foot Locker/Champs Sports | 2022 - 2024</p>
+                <ul>
+                    <li>Three-time consecutive employee of the month.</li>
+                    <li>Consistently met and exceeded sales targets through customer-focused service.</li>
+                    <li>Managed inventory and maintained organized product displays.</li>
+                    <li>Collaborated with team members during high-volume periods.</li>
+                    <li>Developed strong problem-solving skills through customer conflict resolution.</li>
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="section">
+        <div class="container">
+            <h2>ACTIVITIES & ACHIEVEMENTS</h2>
+            <ul>
+                {% for achievement in achievements %}
+                <li>
+                    {% if achievement.link %}
+                    <a href="{{ achievement.link }}" target="_blank">{{ achievement.title }}</a>
+                    {% else %}
+                    {{ achievement.title }}
+                    {% endif %}
+                </li>
+                {% empty %}
+                <li>High School Rotary Club Member</li>
+                <li>Dean's List Recognition (Freshman and Sophomore Year)</li>
+                <li>First Summer Internship at <a href="https://camelai.com" target="_blank">CamelAI</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+
+    <!-- Resume Section -->
+    <section id="resume" class="section">
+        <div class="container">
+            {% if resume_section %}
+            <h2>{{ resume_section.title }}</h2>
+            <div class="resume-content">
+                <p>{{ resume_section.description }}</p>
+                <a href="{{ resume_section.resume_url }}" target="_blank" class="btn btn-primary" download>
+                    <i class="fas fa-download"></i> {{ resume_section.button_text }}
+                </a>
+            </div>
+            {% else %}
+            <h2>RESUME</h2>
+            <div class="resume-content">
+                <p>Want my resume as a PDF?</p>
+                <a href="#" class="btn btn-primary" target="_blank" download>
+                    <i class="fas fa-download"></i> Download Resume
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="contact-header">
+                <p class="section-label">GET IN TOUCH</p>
+                <h2 class="contact-title">{{ site_settings.contact_section_title|default:"CONTACT ME" }}</h2>
+                <div class="contact-divider"></div>
+                <p class="contact-description">
+                    {{ site_settings.contact_section_description|default:"Interested in working together? Feel free to reach out for collaborations or just a friendly hello." }}
+                </p>
+            </div>
+
+            <div class="contact-content">
+                <div class="contact-info-section">
+                    <h3>CONTACT INFORMATION</h3>
+                    
+                    {% if contact_info %}
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-label">Email</span>
+                            <span class="contact-value">{{ contact_info.email }}</span>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-label">Phone</span>
+                            <span class="contact-value">{{ contact_info.phone }}</span>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-label">Location</span>
+                            <span class="contact-value">{{ contact_info.location }}</span>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-label">Availability</span>
+                            <span class="contact-value">{{ contact_info.availability }}</span>
+                        </div>
+                    </div>
+
+                    <div class="social-media">
+                        <h4>Connect on Social Media</h4>
+                        <div class="social-links">
+                            <a href="https://www.linkedin.com/in/marcelo-salinas-431036366/" target="_blank" class="social-link">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://github.com/marshmallowsal" target="_blank" class="social-link">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://x.com/Marcelo67892" target="_blank" class="social-link">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="https://www.instagram.com/marc3lo.alonso/" target="_blank" class="social-link">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-label">Email</span>
+                            <span class="contact-value">marceloa.salinas2@gmail.com</span>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-label">Phone</span>
+                            <span class="contact-value">956-293-0882</span>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-label">Location</span>
+                            <span class="contact-value">San Marcos, TX</span>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-label">Availability</span>
+                            <span class="contact-value">Mon-Fri: 9am - 6pm CST</span>
+                        </div>
+                    </div>
+
+                    <div class="social-media">
+                        <h4>Connect on Social Media</h4>
+                        <div class="social-links">
+                            <a href="https://www.linkedin.com/in/marcelo-salinas-431036366/" target="_blank" class="social-link">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://github.com/marshmallowsal" target="_blank" class="social-link">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://x.com/Marcelo67892" target="_blank" class="social-link">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="https://www.instagram.com/marc3lo.alonso/" target="_blank" class="social-link">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="contact-form-section">
+                    <h3>SEND ME A MESSAGE</h3>
+                    
+                    <form class="contact-form" id="contact-form" method="POST">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" placeholder="Your Email" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" placeholder="Subject" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" placeholder="Your Message" rows="6" required></textarea>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="privacy" name="privacy" required>
+                                <span class="checkmark"></span>
+                                I agree to have my data collected and stored according to the privacy policy.
+                            </label>
+                        </div>
+
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            SEND MESSAGE
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>{{ site_settings.footer_text|default:"© 2024 Marcelo Salinas. All rights reserved." }}</p>
+        </div>
+    </footer>
+
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    
+    <script>
+        // Ensure page loads at home section
+        window.addEventListener('load', function() {
+            // Remove any hash from URL and scroll to top
+            if (window.location.hash) {
+                window.history.replaceState('', document.title, window.location.pathname);
+            }
+            // Scroll to home section smoothly
+            const homeSection = document.getElementById('home');
+            if (homeSection) {
+                homeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            // Ensure home nav link is active
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#home') {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Project Filter Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const blogPosts = document.querySelectorAll('.blog-post');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+
+                    const filterValue = this.getAttribute('data-filter');
+
+                    blogPosts.forEach(post => {
+                        if (filterValue === 'all') {
+                            post.classList.remove('hidden');
+                        } else {
+                            const postCategories = post.getAttribute('data-category');
+                            if (postCategories.includes(filterValue)) {
+                                post.classList.remove('hidden');
+                            } else {
+                                post.classList.add('hidden');
+                            }
+                        }
+                    });
+                });
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Update active nav link on scroll
+            window.addEventListener('scroll', function() {
+                const sections = document.querySelectorAll('section[id]');
+                const navLinks = document.querySelectorAll('.nav-links a');
+                
+                let currentSection = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    if (window.pageYOffset >= sectionTop) {
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + currentSection) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Hero 3D Model Upload Functionality
+        const heroCanvas = document.getElementById('hero-3d-canvas');
+        const dropZone = document.getElementById('model-drop-zone');
+        const uploadBtn = document.getElementById('upload-btn');
+        const fileInput = document.getElementById('file-input');
+        const modelLoading = document.getElementById('model-loading');
+
+        let heroScene, heroCamera, heroRenderer, heroControls, heroModel;
+
+        // Initialize Hero 3D Scene
+        function initHero3D() {
+            const container = heroCanvas.parentElement;
+            
+            // Scene setup
+            heroScene = new THREE.Scene();
+            heroScene.background = new THREE.Color(0x1a1a1a);
+            
+            // Camera setup
+            heroCamera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            heroCamera.position.set(0, 0, 3);
+            
+            // Renderer setup
+            heroRenderer = new THREE.WebGLRenderer({ canvas: heroCanvas, antialias: true });
+            heroRenderer.setSize(container.clientWidth, container.clientHeight);
+            heroRenderer.shadowMap.enabled = true;
+            heroRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            
+            // Controls
+            heroControls = new THREE.OrbitControls(heroCamera, heroCanvas);
+            heroControls.enableDamping = true;
+            heroControls.dampingFactor = 0.05;
+            heroControls.autoRotate = true;
+            heroControls.autoRotateSpeed = 1.5;
+            heroControls.enableZoom = true;
+            heroControls.enablePan = false;
+            heroControls.minDistance = 1.5;
+            heroControls.maxDistance = 8;
+            
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+            heroScene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
+            directionalLight.position.set(5, 5, 5);
+            directionalLight.castShadow = true;
+            directionalLight.shadow.mapSize.width = 2048;
+            directionalLight.shadow.mapSize.height = 2048;
+            heroScene.add(directionalLight);
+            
+            const redLight = new THREE.PointLight(0xe20000, 0.4, 100);
+            redLight.position.set(-5, 5, 5);
+            heroScene.add(redLight);
+            
+            const blueLight = new THREE.PointLight(0x0066ff, 0.2, 100);
+            blueLight.position.set(5, -5, -5);
+            heroScene.add(blueLight);
+            
+            // Create placeholder LEGO brick
+            createPlaceholderLegoBrick();
+            
+            // Hide drop zone initially since we have a placeholder
+            dropZone.classList.add('has-model');
+            
+            // Start animation
+            animateHero();
+        }
+        
+        // Create a placeholder LEGO brick
+        function createPlaceholderLegoBrick() {
+            const legoGroup = new THREE.Group();
+            
+            // LEGO brick dimensions (4x2 brick)
+            const brickWidth = 3.2;  // 4 studs * 0.8 units
+            const brickDepth = 1.6;  // 2 studs * 0.8 units  
+            const brickHeight = 0.96; // Standard LEGO height
+            const wallThickness = 0.12;
+            
+            // Create hollow main body using CSG-like approach with multiple geometries
+            const outerGeometry = new THREE.BoxGeometry(brickWidth, brickHeight, brickDepth);
+            const innerGeometry = new THREE.BoxGeometry(
+                brickWidth - wallThickness * 2, 
+                brickHeight - wallThickness, 
+                brickDepth - wallThickness * 2
+            );
+            
+            const brickMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0xe20000,
+                shininess: 100
+            });
+            
+            // Create outer shell
+            const outerBrick = new THREE.Mesh(outerGeometry, brickMaterial);
+            outerBrick.position.y = 0;
+            outerBrick.castShadow = true;
+            outerBrick.receiveShadow = true;
+            legoGroup.add(outerBrick);
+            
+            // Create inner cavity (darker red to show hollow interior)
+            const innerMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0x990000,
+                shininess: 50,
+                side: THREE.BackSide // Only render inner faces
+            });
+            const innerCavity = new THREE.Mesh(innerGeometry, innerMaterial);
+            innerCavity.position.y = wallThickness / 2;
+            legoGroup.add(innerCavity);
+            
+            // Add studs on top (4x2 = 8 studs)
+            const studGeometry = new THREE.CylinderGeometry(0.24, 0.24, 0.18, 16);
+            const studMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0xe20000,
+                shininess: 120
+            });
+            
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < 2; j++) {
+                    const stud = new THREE.Mesh(studGeometry, studMaterial);
+                    stud.position.set(
+                        -1.2 + (i * 0.8), 
+                        brickHeight/2 + 0.09, 
+                        -0.4 + (j * 0.8)
+                    );
+                    stud.castShadow = true;
+                    legoGroup.add(stud);
+                }
+            }
+            
+
+            
+            // Add bottom tubes (hollow cylinders that go up into the brick)
+            const tubeOuterGeometry = new THREE.CylinderGeometry(0.32, 0.32, 0.7, 16);
+            const tubeInnerGeometry = new THREE.CylinderGeometry(0.24, 0.24, 0.72, 16);
+            const tubeMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0xe20000,
+                shininess: 80
+            });
+            const tubeInnerMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0x990000,
+                shininess: 50,
+                side: THREE.BackSide
+            });
+            
+            // Create tubes in a pattern for 4x2 brick (3x1 pattern for internal support)
+            for (let i = 0; i < 3; i++) {
+                // Outer tube
+                const tubeOuter = new THREE.Mesh(tubeOuterGeometry, tubeMaterial);
+                tubeOuter.position.set(
+                    -0.8 + (i * 0.8), 
+                    -0.13, 
+                    0
+                );
+                tubeOuter.castShadow = true;
+                legoGroup.add(tubeOuter);
+                
+                // Inner hollow part
+                const tubeInner = new THREE.Mesh(tubeInnerGeometry, tubeInnerMaterial);
+                tubeInner.position.set(
+                    -0.8 + (i * 0.8), 
+                    -0.13, 
+                    0
+                );
+                legoGroup.add(tubeInner);
+            }
+            
+            // Add side wall supports (thin vertical walls inside)
+            const supportGeometry = new THREE.BoxGeometry(0.08, 0.6, brickDepth - wallThickness * 2);
+            const supportMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0xe20000,
+                shininess: 80
+            });
+            
+            // Vertical supports between tubes
+            for (let i = 0; i < 2; i++) {
+                const support = new THREE.Mesh(supportGeometry, supportMaterial);
+                support.position.set(
+                    -0.4 + (i * 0.8), 
+                    0, 
+                    0
+                );
+                legoGroup.add(support);
+            }
+            
+            // Add bottom rim detail
+            const rimGeometry = new THREE.BoxGeometry(brickWidth - 0.1, 0.08, brickDepth - 0.1);
+            const rimMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0xcc0000,
+                shininess: 90
+            });
+            const rim = new THREE.Mesh(rimGeometry, rimMaterial);
+            rim.position.y = -brickHeight/2 + 0.04;
+            rim.castShadow = true;
+            legoGroup.add(rim);
+            
+            // Position and scale the LEGO brick
+            legoGroup.scale.setScalar(0.6);
+            legoGroup.position.set(0, 0, 0);
+            legoGroup.rotation.x = Math.PI * 0.05; // Slight tilt for better viewing
+            
+            heroModel = legoGroup;
+            heroScene.add(heroModel);
+        }
+
+        function animateHero() {
+            requestAnimationFrame(animateHero);
+            
+            if (heroControls) {
+                heroControls.update();
+            }
+            
+            if (heroRenderer && heroScene && heroCamera) {
+                heroRenderer.render(heroScene, heroCamera);
+            }
+        }
+
+        // File upload handling
+        uploadBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', handleFileSelect);
+
+        // Drag and drop handling
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('drag-over');
+        });
+
+        dropZone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect({ target: { files: files } });
+            }
+        });
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Check file type
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            if (fileExtension !== 'glb' && fileExtension !== 'gltf') {
+                showErrorMessage('Please upload a .glb or .gltf file format');
+                return;
+            }
+
+            // Check file size (limit to 50MB)
+            const maxSize = 50 * 1024 * 1024; // 50MB
+            if (file.size > maxSize) {
+                showErrorMessage('File size too large. Please upload a file smaller than 50MB');
+                return;
+            }
+
+            // Show loading
+            dropZone.classList.add('has-model');
+            modelLoading.style.display = 'block';
+            
+            // Add loading text with file name
+            const loadingText = modelLoading.querySelector('p');
+            loadingText.textContent = `Loading ${file.name}...`;
+
+            // Load the model
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                loadHeroModel(e.target.result, fileExtension);
+            };
+            
+            reader.onerror = function() {
+                modelLoading.style.display = 'none';
+                dropZone.classList.remove('has-model');
+                showErrorMessage('Error reading file. Please try again.');
+            };
+            
+            if (fileExtension === 'glb') {
+                reader.readAsArrayBuffer(file);
+            } else {
+                reader.readAsText(file);
+            }
+        }
+
+        function loadHeroModel(data, fileExtension) {
+            const loader = new THREE.GLTFLoader();
+            
+            const loadModel = (gltf) => {
+                // Remove existing model
+                if (heroModel) {
+                    heroScene.remove(heroModel);
+                }
+                
+                heroModel = gltf.scene;
+                
+                // Scale and position the model
+                const box = new THREE.Box3().setFromObject(heroModel);
+                const center = box.getCenter(new THREE.Vector3());
+                const size = box.getSize(new THREE.Vector3());
+                
+                // Scale to fit in view
+                const maxDim = Math.max(size.x, size.y, size.z);
+                const scale = 2 / maxDim;
+                heroModel.scale.setScalar(scale);
+                
+                // Center the model
+                heroModel.position.copy(center.multiplyScalar(-scale));
+                
+                // Enable shadows
+                heroModel.traverse((child) => {
+                    if (child.isMesh) {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                    }
+                });
+                
+                heroScene.add(heroModel);
+                
+                // Hide loading and keep drop zone hidden
+                modelLoading.style.display = 'none';
+                dropZone.classList.add('has-model');
+                
+                // Show model controls for custom models
+                showModelControls();
+                
+                // Adjust camera position
+                heroCamera.position.set(0, 0, 4);
+                heroControls.reset();
+                
+                // Add success feedback
+                showSuccessMessage('Model loaded successfully!');
+            };
+            
+            if (fileExtension === 'glb') {
+                loader.parse(data, '', loadModel, (error) => {
+                    console.error('Error loading model:', error);
+                    modelLoading.style.display = 'none';
+                    dropZone.classList.remove('has-model');
+                    showErrorMessage('Error loading model. Please try a different file.');
+                });
+            } else {
+                loader.parse(data, '', loadModel, (error) => {
+                    console.error('Error loading model:', error);
+                    modelLoading.style.display = 'none';
+                    dropZone.classList.remove('has-model');
+                    showErrorMessage('Error loading model. Please try a different file.');
+                });
+            }
+        }
+        
+        // Show success message
+        function showSuccessMessage(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(45deg, #28a745, #34ce57);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                font-weight: 600;
+                z-index: 10000;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+                box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            `;
+            notification.innerHTML = `<i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>${message}`;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.style.transform = 'translateX(0)', 100);
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => document.body.removeChild(notification), 300);
+            }, 3000);
+        }
+        
+        // Show error message
+        function showErrorMessage(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(45deg, #dc3545, #e74c3c);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                font-weight: 600;
+                z-index: 10000;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+                box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+            `;
+            notification.innerHTML = `<i class="fas fa-exclamation-triangle" style="margin-right: 0.5rem;"></i>${message}`;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.style.transform = 'translateX(0)', 100);
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => document.body.removeChild(notification), 300);
+            }, 4000);
+        }
+
+        // Add overlay controls functionality
+        const controlsOverlay = document.getElementById('model-controls-overlay');
+        const uploadNewBtn = document.getElementById('upload-new-btn');
+        const resetModelBtn = document.getElementById('reset-model-btn');
+        
+        uploadNewBtn.addEventListener('click', () => {
+            dropZone.classList.remove('has-model');
+            controlsOverlay.style.display = 'none';
+        });
+        
+        resetModelBtn.addEventListener('click', () => {
+            // Remove current model and reload placeholder
+            if (heroModel) {
+                heroScene.remove(heroModel);
+            }
+            createPlaceholderLegoBrick();
+            heroCamera.position.set(0, 0, 3);
+            heroControls.reset();
+            showSuccessMessage('Reset to default LEGO brick');
+        });
+        
+        // Show controls when model is loaded (but not for placeholder)
+        function showModelControls() {
+            controlsOverlay.style.display = 'flex';
+        }
+
+        // Initialize hero 3D on page load
+        setTimeout(() => {
+            initHero3D();
+        }, 500);
+
+        // Handle window resize for hero canvas
+        window.addEventListener('resize', () => {
+            if (heroCamera && heroRenderer && heroControls) {
+                const container = heroCanvas.parentElement;
+                heroCamera.aspect = container.clientWidth / container.clientHeight;
+                heroCamera.updateProjectionMatrix();
+                heroRenderer.setSize(container.clientWidth, container.clientHeight);
+                heroControls.update();
+            }
+                 });
+
+        // Contact Form Functionality - Django AJAX Submission
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data for validation
+                const formData = new FormData(contactForm);
+                const name = formData.get('name');
+                const email = formData.get('email');
+                const subject = formData.get('subject');
+                const message = formData.get('message');
+                const privacy = formData.get('privacy');
+                
+                // Validate form
+                if (!name || !email || !subject || !message) {
+                    showErrorMessage('Please fill in all required fields.');
+                    return;
+                }
+                
+                if (!privacy) {
+                    showErrorMessage('Please agree to the privacy policy.');
+                    return;
+                }
+                
+                // Validate email format
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    showErrorMessage('Please enter a valid email address.');
+                    return;
+                }
+                
+                const submitBtn = contactForm.querySelector('.submit-btn');
+                const originalText = submitBtn.innerHTML;
+                
+                // Change button to loading state
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SENDING...';
+                submitBtn.disabled = true;
+                
+                // Submit form using fetch
+                fetch('/contact/', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Success
+                        submitBtn.innerHTML = '<i class="fas fa-check"></i> MESSAGE SENT!';
+                        submitBtn.style.backgroundColor = '#28a745';
+                        
+                        // Show success notification
+                        showSuccessMessage(data.message);
+                        
+                        // Reset form
+                        contactForm.reset();
+                        
+                        // Reset button after 3 seconds
+                        setTimeout(() => {
+                            submitBtn.innerHTML = originalText;
+                            submitBtn.style.backgroundColor = '';
+                            submitBtn.disabled = false;
+                        }, 3000);
+                    } else {
+                        throw new Error(data.message || 'Unknown error occurred');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    
+                    // Show error state
+                    submitBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> FAILED TO SEND';
+                    submitBtn.style.backgroundColor = '#dc3545';
+                    
+                    // Show error notification
+                    showErrorMessage(error.message || 'Failed to send message. Please try again or email me directly at marceloa.salinas2@gmail.com');
+                    
+                    // Reset button after 3 seconds
+                    setTimeout(() => {
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.style.backgroundColor = '';
+                        submitBtn.disabled = false;
+                    }, 3000);
+                });
+            });
+        }
+    </script>
+
+    <script>
+        // 3D Model Explorer Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Model data
+            const modelData = {
+                'turbine': {
+                    parts: '142 components',
+                    created: 'June 12, 2023',
+                    software: 'SolidWorks 2023',
+                    dimensions: '450mm × 320mm × 280mm'
+                },
+                'drone': {
+                    parts: '67 components',
+                    created: 'November 15, 2024',
+                    software: 'Fusion 360',
+                    dimensions: '350mm × 350mm × 120mm'
+                },
+                'robotic-arm': {
+                    parts: '89 components',
+                    created: 'October 3, 2024',
+                    software: 'SolidWorks 2023',
+                    dimensions: '800mm × 200mm × 150mm'
+                },
+                'suspension': {
+                    parts: '45 components',
+                    created: 'September 20, 2024',
+                    software: 'ANSYS Mechanical',
+                    dimensions: '300mm × 250mm × 400mm'
+                }
+            };
+
+                         // Initialize Three.js scene
+             let scene, camera, renderer, cube, controls;
+             let currentView = 'solid';
+             let autoRotate = true;
+
+             function initThreeJS() {
+                 const container = document.getElementById('three-canvas-container');
+                 const canvas = document.getElementById('model-canvas');
+                 
+                 // Scene setup
+                 scene = new THREE.Scene();
+                 scene.background = new THREE.Color(0x1a1a1a);
+                 
+                 // Camera setup
+                 camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+                 camera.position.set(4, 3, 5);
+                 camera.lookAt(0, 0, 0);
+                 
+                 // Renderer setup
+                 renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+                 renderer.setSize(container.clientWidth, container.clientHeight);
+                 renderer.shadowMap.enabled = true;
+                 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+                 
+                 // Add OrbitControls for mouse interaction
+                 controls = new THREE.OrbitControls(camera, canvas);
+                 controls.enableDamping = true;
+                 controls.dampingFactor = 0.05;
+                 controls.enableZoom = true;
+                 controls.enablePan = true;
+                 controls.enableRotate = true;
+                 controls.autoRotate = false;
+                 controls.autoRotateSpeed = 2.0;
+                 controls.minDistance = 2;
+                 controls.maxDistance = 15;
+                 controls.minPolarAngle = 0;
+                 controls.maxPolarAngle = Math.PI;
+                 
+                 // Stop auto rotation when user interacts
+                 controls.addEventListener('start', () => {
+                     autoRotate = false;
+                 });
+                 
+                 // Resume auto rotation after user stops interacting (optional)
+                 let interactionTimeout;
+                 controls.addEventListener('end', () => {
+                     clearTimeout(interactionTimeout);
+                     interactionTimeout = setTimeout(() => {
+                         autoRotate = true;
+                     }, 3000); // Resume auto rotation after 3 seconds of inactivity
+                 });
+                 
+                 // Create a placeholder 3D object (cube with some complexity)
+                 createModel();
+                 
+                 // Lighting
+                 const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
+                 scene.add(ambientLight);
+                 
+                 const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                 directionalLight.position.set(10, 10, 5);
+                 directionalLight.castShadow = true;
+                 directionalLight.shadow.mapSize.width = 2048;
+                 directionalLight.shadow.mapSize.height = 2048;
+                 scene.add(directionalLight);
+                 
+                 // Add point light for better illumination
+                 const pointLight = new THREE.PointLight(0xe20000, 0.3, 100);
+                 pointLight.position.set(-10, 10, 10);
+                 scene.add(pointLight);
+                 
+                 // Hide loading spinner and show interaction hint
+                 document.querySelector('.loading-spinner').style.display = 'none';
+                 
+                 // Show interaction hint after a short delay
+                 setTimeout(() => {
+                     document.querySelector('.interaction-hint').classList.add('show');
+                 }, 500);
+                 
+                 // Hide hint after first interaction
+                 let hintHidden = false;
+                 controls.addEventListener('start', () => {
+                     if (!hintHidden) {
+                         document.querySelector('.interaction-hint').classList.remove('show');
+                         hintHidden = true;
+                     }
+                 });
+                 
+                 // Start animation loop
+                 animate();
+             }
+
+                         function createModel() {
+                 // Create a more complex engineering-like model
+                 const group = new THREE.Group();
+                 
+                 // Main housing
+                 const housingGeometry = new THREE.CylinderGeometry(1.2, 1.2, 0.8, 16);
+                 const housingMaterial = new THREE.MeshPhongMaterial({ 
+                     color: 0x555555,
+                     shininess: 100
+                 });
+                 const housing = new THREE.Mesh(housingGeometry, housingMaterial);
+                 housing.castShadow = true;
+                 housing.receiveShadow = true;
+                 group.add(housing);
+                 
+                 // Central shaft
+                 const shaftGeometry = new THREE.CylinderGeometry(0.15, 0.15, 2, 8);
+                 const shaftMaterial = new THREE.MeshPhongMaterial({ 
+                     color: 0x333333,
+                     shininess: 150
+                 });
+                 const shaft = new THREE.Mesh(shaftGeometry, shaftMaterial);
+                 shaft.castShadow = true;
+                 group.add(shaft);
+                 
+                 // Turbine blades
+                 for (let i = 0; i < 12; i++) {
+                     const angle = (i / 12) * Math.PI * 2;
+                     const bladeGeometry = new THREE.BoxGeometry(0.05, 0.6, 0.2);
+                     const bladeMaterial = new THREE.MeshPhongMaterial({ 
+                         color: 0xe20000,
+                         shininess: 80
+                     });
+                     const blade = new THREE.Mesh(bladeGeometry, bladeMaterial);
+                     blade.position.set(
+                         Math.cos(angle) * 0.8,
+                         0,
+                         Math.sin(angle) * 0.8
+                     );
+                     blade.rotation.y = angle + Math.PI / 2;
+                     blade.rotation.z = Math.PI / 12; // Slight angle for realism
+                     blade.castShadow = true;
+                     group.add(blade);
+                 }
+                 
+                 // Connection bolts
+                 for (let i = 0; i < 6; i++) {
+                     const angle = (i / 6) * Math.PI * 2;
+                     const boltGeometry = new THREE.CylinderGeometry(0.08, 0.08, 0.3, 6);
+                     const boltMaterial = new THREE.MeshPhongMaterial({ 
+                         color: 0x999999,
+                         shininess: 120
+                     });
+                     const bolt = new THREE.Mesh(boltGeometry, boltMaterial);
+                     bolt.position.set(
+                         Math.cos(angle) * 1.0,
+                         0.6,
+                         Math.sin(angle) * 1.0
+                     );
+                     bolt.castShadow = true;
+                     group.add(bolt);
+                 }
+                 
+                 // End caps
+                 const capGeometry = new THREE.CylinderGeometry(1.1, 1.1, 0.1, 16);
+                 const capMaterial = new THREE.MeshPhongMaterial({ 
+                     color: 0x777777,
+                     shininess: 90
+                 });
+                 
+                 const topCap = new THREE.Mesh(capGeometry, capMaterial);
+                 topCap.position.y = 0.45;
+                 topCap.castShadow = true;
+                 group.add(topCap);
+                 
+                 const bottomCap = new THREE.Mesh(capGeometry, capMaterial);
+                 bottomCap.position.y = -0.45;
+                 bottomCap.castShadow = true;
+                 group.add(bottomCap);
+                 
+                 cube = group;
+                 scene.add(cube);
+             }
+
+                         function animate() {
+                 requestAnimationFrame(animate);
+                 
+                 // Update controls
+                 if (controls) {
+                     controls.update();
+                 }
+                 
+                 // Auto-rotate the model when not being interacted with
+                 if (cube && autoRotate) {
+                     cube.rotation.x += 0.003;
+                     cube.rotation.y += 0.007;
+                 }
+                 
+                 renderer.render(scene, camera);
+             }
+
+            // View option controls
+            const viewButtons = document.querySelectorAll('.view-btn');
+            viewButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    viewButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const view = this.getAttribute('data-view');
+                    currentView = view;
+                    updateModelView(view);
+                });
+            });
+
+            function updateModelView(view) {
+                if (!cube) return;
+                
+                cube.children.forEach(child => {
+                    if (child.material) {
+                        switch(view) {
+                            case 'solid':
+                                child.material.wireframe = false;
+                                child.material.opacity = 1;
+                                child.material.transparent = false;
+                                break;
+                            case 'wireframe':
+                                child.material.wireframe = true;
+                                child.material.opacity = 0.8;
+                                child.material.transparent = true;
+                                break;
+                            case 'exploded':
+                                child.position.multiplyScalar(1.5);
+                                child.material.wireframe = false;
+                                child.material.opacity = 0.9;
+                                child.material.transparent = true;
+                                break;
+                            case 'textured':
+                                child.material.wireframe = false;
+                                child.material.opacity = 1;
+                                child.material.transparent = false;
+                                // Add texture effects here
+                                break;
+                        }
+                    }
+                });
+            }
+
+            // Model selector
+            const modelSelect = document.getElementById('model-select');
+            modelSelect.addEventListener('change', function() {
+                const selectedModel = this.value;
+                updateModelInfo(selectedModel);
+            });
+
+            function updateModelInfo(modelKey) {
+                const data = modelData[modelKey];
+                if (data) {
+                    document.getElementById('parts-count').textContent = data.parts;
+                    document.getElementById('created-date').textContent = data.created;
+                    document.getElementById('software-used').textContent = data.software;
+                    document.getElementById('dimensions').textContent = data.dimensions;
+                }
+            }
+
+                         // Window resize handler
+             window.addEventListener('resize', function() {
+                 if (camera && renderer && controls) {
+                     const container = document.getElementById('three-canvas-container');
+                     camera.aspect = container.clientWidth / container.clientHeight;
+                     camera.updateProjectionMatrix();
+                     renderer.setSize(container.clientWidth, container.clientHeight);
+                     controls.update();
+                 }
+             });
+
+            // Initialize Three.js after a short delay
+            setTimeout(() => {
+                initThreeJS();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
