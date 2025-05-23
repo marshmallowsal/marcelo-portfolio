@@ -40,6 +40,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '.railway.app',
     '.up.railway.app',
+    'marceloasalinasportfolio.com',
 ]
 
 # Application definition
